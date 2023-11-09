@@ -1,0 +1,28 @@
+
+ FECHA : 2023-10-17     HORA : 23:17:59
+ CLIENTE :  EDINSON PASCUAL SANTOS 
+
+ PRODUCTO     Kg        CANT.  HORA     
+========================================
+ POLLO YUGO   10.00     6      23:11:39 
+ POLLO PERLA  10.00     5      23:11:39 
+ POLLO CHIMU  10.00     10     23:11:39 
+ POLLO CHIMU  10.00     5      23:11:39 
+ POLLO XX     10.00     7      23:11:39 
+
+ DESCUENTOS :
+========================================
+ POLLO CHIMU  -10.00    -4     23:11:39 
+
+ TOTALES :           
+========================================
+ PRODUCTO        Kg.       CANTIDAD     
+========================================
+ POLLO YUGO      10.0      6        
+ POLLO PERLA     10.0      5        
+ POLLO CHIMU     10.0      11       
+ POLLO XX        10.0      7        
+========================================
+===       GRACIAS POR SU COMPRA      ===
+========================================
+
