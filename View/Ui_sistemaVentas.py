@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\AProyects\proyecto_in_escritorio\View\sistemaVentas.ui'
+# Form implementation generated from reading ui file 'c:\Users\edins\Documents\RECURSOS PROYECTO DE INNOVACIÓN\proyecto_in_escritorio\View\sistemaVentas.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -1077,7 +1077,7 @@ class Ui_MainWindow(object):
         self.frame.raise_()
         self.txtCantidadDescuento.raise_()
         self.frmIngresarPassword = QtWidgets.QFrame(self.centralwidget)
-        self.frmIngresarPassword.setGeometry(QtCore.QRect(525, 300, 500, 300))
+        self.frmIngresarPassword.setGeometry(QtCore.QRect(525, 300, 550, 300))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.frmIngresarPassword.setFont(font)

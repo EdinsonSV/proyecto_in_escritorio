@@ -140,8 +140,8 @@ class WorkerThreadSubirDatosBase(QThread):
                 print("Con conexión a internet")
                 try:
                     self.conexion = DataBase.database_conexion.Conectar()
-                    self.conexion.actualizar_datos_servidor_procesos()
-                    self.conexion.actualizar_datos_servidor_pesadas()
+                    #self.conexion.actualizar_datos_servidor_procesos()
+                    #self.conexion.actualizar_datos_servidor_pesadas()
                 except Exception as e:
                     print(f"Error al interactuar con la base de datos: {e}")
                 else:
@@ -926,11 +926,10 @@ class Inicio(QMainWindow):
         else:
             print("Con conexión a internet")
             try:
-                self.conexion.actualizar_datos_servidor_a_local_clientes()
-                time.sleep(1)
-                self.conexion.actualizar_datos_servidor_a_local_precios()
-                time.sleep(1)
-                self.conexion.actualizar_datos_servidor_a_local_password()
+                #self.conexion.actualizar_datos_servidor_a_local_clientes()
+                #self.conexion.actualizar_datos_servidor_a_local_precios()
+                #self.conexion.actualizar_datos_servidor_a_local_password()
+                print("Exito al interactuar con la base de datos")
             except Exception as e:
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
@@ -946,9 +945,9 @@ class Inicio(QMainWindow):
         else:
             print("Con conexión a internet")
             try:
-                self.conexion.actualizar_datos_servidor_procesos()
-                time.sleep(2)
-                self.conexion.actualizar_datos_servidor_pesadas()
+                #self.conexion.actualizar_datos_servidor_procesos()
+                #self.conexion.actualizar_datos_servidor_pesadas()
+                print("Exito al interactuar con la base de datos")
             except Exception as e:
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
