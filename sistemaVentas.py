@@ -89,7 +89,6 @@ frmRegistrarJabas = False
 frmRegistrarDescuentoCan = False
 frmEditarCantidadTara = False
 frmEditarCantidadDescuento = False
-btnActualizar = False
 
 # Variables para la Base de Datos
 codCliente = 0
@@ -116,7 +115,8 @@ valorDeConversionDesc = 0
 
 # Variable que indica si esta listo para realizar acciones 
 listoParaAccionar = False
-contadorActualizar = 0
+btnActualizar = True
+contadorActualizar = 30
 
 # Variables de rutas de imagenes para alerta
 correcto = "imagenes/correcto.png"
@@ -341,10 +341,6 @@ class Inicio(QMainWindow):
         self.fn_traerDatosServidor() 
         self.workerBase = WorkerThreadSubirDatosBase() # Actualización Base de Datos de Local a Servidor
         self.workerBase.start()
-        global btnActualizar
-        global contadorActualizar 
-        btnActualizar = True
-        contadorActualizar = 30
         threadBtn = threading.Thread(target=self.fn_temporizadorBtn)
         threadBtn.start()
 
@@ -384,6 +380,11 @@ class Inicio(QMainWindow):
     # ======================== Funciones llamadas por los Hilos ========================
     
     def fn_ActualizarSP8266VentasRegistrar(self,val):
+        global horaPeso
+        global fechaPeso
+        
+        horaPeso = datetime.now().strftime('%H:%M:%S')
+        fechaPeso = datetime.now().strftime('%Y-%m-%d')
 
         datos=val.split("/")
         codesp=datos[0]
@@ -423,11 +424,23 @@ class Inicio(QMainWindow):
                 numeroProcesoBase = numVentaBase[0]
             
             self.conexion.db_registrarPesadas(numeroProcesoBase,codesp,pesoBase,horaPeso,codClienteEs,fechaPeso,cantidadBase,precioBase,3,numJabas,valorConversionBase,estadoPeso,estadoWebPeso,observacionPeso,idGrupoCliBase)
-            self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente.")
+            self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente | Balanza 3.",2000)
+            
+            if(codClienteEs == codCliente):
+                self.fn_seleccionaBalanza()
+                self.fn_seleccionarEspecie(idEspecie)
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_verificarProceso()
+                self.fn_listarVenta()
         else:
             self.fn_alerta("¡ADVERTENCIA!",error,"El codigo de cliente ingresado no existe.",1500)
         
     def fn_ActualizarSP8266VentasRegistrarTara(self,val):
+        global horaPeso
+        global fechaPeso
+        
+        horaPeso = datetime.now().strftime('%H:%M:%S')
+        fechaPeso = datetime.now().strftime('%Y-%m-%d')
         
         datos=val.split("/")
         codesp=datos[0]
@@ -467,7 +480,14 @@ class Inicio(QMainWindow):
                 numeroProcesoBase = numVentaBase[0]
             
             self.conexion.db_registrarPesadas(numeroProcesoBase,codesp,pesoBase,horaPeso,codClienteEs,fechaPeso,numJabas,precioBase,3,cantidadBase,valorConversionBase,estadoPeso,estadoWebPeso,observacionPeso,idGrupoCliBase)
-            self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente.")
+            self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente | Balanza 3.",2000)
+            
+            if(codClienteEs == codCliente):
+                self.fn_seleccionaBalanza()
+                self.fn_seleccionarEspecie(idEspecie)
+                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
+                self.fn_verificarProceso()
+                self.fn_listarVenta()
         else:
             self.fn_alerta("¡ADVERTENCIA!",error,"El codigo de cliente ingresado no existe.",1500)
     
@@ -1384,6 +1404,11 @@ class Inicio(QMainWindow):
         global user_input_arduino
         global pesoBalanza1
         global pesoBalanza2
+        global horaPeso
+        global fechaPeso
+        
+        horaPeso = datetime.now().strftime('%H:%M:%S')
+        fechaPeso = datetime.now().strftime('%Y-%m-%d')
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())
         cantidadRegistro = int(self.ui.txtCantidadParaIngresar.text())
@@ -1409,6 +1434,11 @@ class Inicio(QMainWindow):
         global user_input_arduino
         global pesoBalanza1
         global pesoBalanza2
+        global horaPeso
+        global fechaPeso
+        
+        horaPeso = datetime.now().strftime('%H:%M:%S')
+        fechaPeso = datetime.now().strftime('%Y-%m-%d')
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
         cantidadRegistro = int(self.ui.txtCantidadDescuento.text())*-1
@@ -1435,6 +1465,11 @@ class Inicio(QMainWindow):
         global user_input_arduino
         global pesoBalanza1
         global pesoBalanza2
+        global horaPeso
+        global fechaPeso
+        
+        horaPeso = datetime.now().strftime('%H:%M:%S')
+        fechaPeso = datetime.now().strftime('%Y-%m-%d')
         
         pesoNeto = float(self.ui.lblPesoIndicador.text())*-1
         cantidadRegistro = int(self.ui.txtCantidadParaIngresar.text())
