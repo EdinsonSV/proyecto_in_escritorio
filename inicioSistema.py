@@ -19,6 +19,7 @@ evitamos que la aplicación se detenga por la lectura constante """
 class WorkerThread(QThread):
     update_peso = pyqtSignal(str)
     update_estado = pyqtSignal(str)
+    update_baliza = pyqtSignal(str)
     def run(self):
         try:
             COMINDICADOR1 = "COM"+ COM1
@@ -30,8 +31,9 @@ class WorkerThread(QThread):
                     self.update_peso.emit("0.00")
                     self.update_estado.emit("0")   
                 else:
-                    self.update_peso.emit(result[6:14])
-                    #self.update_peso.emit(result[2:10])
+                    #self.update_peso.emit(result[6:14])
+                    self.update_peso.emit(result[2:10])
+                    self.update_baliza.emit(result[2:10])
                     self.update_estado.emit("1")
         except Exception as e:
             print("WT IN"+str(e))
@@ -46,6 +48,7 @@ evitamos que la aplicación se detenga por la lectura constante """
 class WorkerThread2(QThread):
     update_peso2 = pyqtSignal(str)
     update_estado2 = pyqtSignal(str)
+    update_baliza2 = pyqtSignal(str)
     def run(self):
         try:
             COMINDICADOR2 = "COM"+ COM2
@@ -57,8 +60,9 @@ class WorkerThread2(QThread):
                     self.update_peso2.emit("0.00")
                     self.update_estado2.emit("0")   
                 else:
-                    self.update_peso2.emit(result2[6:14])
-                    #self.update_peso2.emit(result2[2:10])
+                    #self.update_peso2.emit(result2[6:14])
+                    self.update_peso2.emit(result2[2:10])
+                    self.update_baliza2.emit(result2[2:10])
                     self.update_estado2.emit("1")
         except Exception as e:
             print("WT IN2"+str(e))  
@@ -97,11 +101,13 @@ class InicioSistema(QMainWindow):
         self.worker.start()
         self.worker.update_peso.connect(self.moduloVentas.evt_actualizar_peso)
         self.worker.update_estado.connect(self.moduloVentas.evt_actualizar_estado)
+        self.worker.update_baliza.connect(self.moduloVentas.evt_actualizar_baliza)
         
         self.worker2 = WorkerThread2() # Hilo Balanza 2
         self.worker2.start()
         self.worker2.update_peso2.connect(self.moduloVentas.evt_actualizar_peso2)
         self.worker2.update_estado2.connect(self.moduloVentas.evt_actualizar_estado2)
+        self.worker2.update_baliza2.connect(self.moduloVentas.evt_actualizar_baliza2)
     
     def fn_declararPuertoIndicadores(self):
         global COM1

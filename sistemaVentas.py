@@ -140,9 +140,8 @@ class WorkerThreadSubirDatosBase(QThread):
                 print("Con conexión a internet")
                 try:
                     self.conexion = DataBase.database_conexion.Conectar()
-                    #self.conexion.actualizar_datos_servidor_procesos()
-                    time.sleep(1)
-                    #self.conexion.actualizar_datos_servidor_pesadas()
+                    self.conexion.actualizar_datos_servidor_procesos()
+                    self.conexion.actualizar_datos_servidor_pesadas()
                 except Exception as e:
                     print(f"Error al interactuar con la base de datos: {e}")
                 else:
@@ -156,7 +155,6 @@ user_input_arduino = ""
             
 class WorkerThreadAR(QThread):
     def run(self):
-        global user_input_arduino
         try:
             COMARDUINO = "COM"+COMAR
             serialArduino = serial.Serial(COMARDUINO, baudrate=9600, timeout=1)
@@ -164,7 +162,6 @@ class WorkerThreadAR(QThread):
             while True:
                 if user_input_arduino != "":
                     serialArduino.write(str(user_input_arduino).encode('utf8'))
-                    user_input_arduino = ""
         except Exception as e:
             print("WT AR"+str(e))
     
@@ -242,7 +239,7 @@ class WorkerThreadSP8266VentasRegistrar(QThread):
 
             while True:
                 s.listen()
-                conn = s.accept()
+                conn, addr = s.accept()
                 
                 data = conn.recv(1024)
                 datos = json.loads(data)
@@ -268,7 +265,7 @@ class WorkerThreadSP8266VentasRegistrarTara(QThread):
 
             while True:
                 s.listen()
-                conn = s.accept()
+                conn, addr = s.accept()
                 
                 data = conn.recv(1024)
                 datos = json.loads(data)
@@ -370,7 +367,7 @@ class Inicio(QMainWindow):
         self.ui.txtCodigoCliente.setEnabled(True)
         self.ui.txtCodigoCliente.setFocus(True)
         self.ui.txtCodigoCliente.textChanged.connect(self.fn_recepcionaCodigoTrabajador)
-        self.ui.lblPesoIndicador.setText("10.00")
+        self.ui.lblPesoIndicador.setText("0.00")
         
         self.ui.frmIngresarCantidad.setHidden(True)
         self.ui.frmAlerta.setHidden(True)
@@ -387,7 +384,7 @@ class Inicio(QMainWindow):
     # ======================== Funciones llamadas por los Hilos ========================
     
     def fn_ActualizarSP8266VentasRegistrar(self,val):
-        
+
         datos=val.split("/")
         codesp=datos[0]
         cantidadBase=int(datos[1])
@@ -481,23 +478,34 @@ class Inicio(QMainWindow):
         if (balanzaSeleccionada == 1) :
             try:
                 signo = val[0:1]
-                val = float(val[1:10])
+                val = float(val[1:9])
                 
                 if (signo == "-") and val != 0:
                     self.ui.lblPesoIndicador.setText("-"+str(format(val, ".2f")))
                 else:
                     self.ui.lblPesoIndicador.setText(format(val, ".2f"))
-                    
-                if pesoBalanza1 == False and float(self.ui.lblPesoIndicador.text()) > 0.5:
-                    user_input_arduino = "c"
-                elif pesoBalanza1 == False and float(self.ui.lblPesoIndicador.text()) < 0.5:
-                    user_input_arduino = "e"
-                    
-                if pesoBalanza1 == True and float(self.ui.lblPesoIndicador.text()) < 0.5:
-                    pesoBalanza1 == False
-                    
             except ValueError:
                 self.ui.lblPesoIndicador.setText("0.00")
+
+    def evt_actualizar_baliza(self, val):    
+        global pesoBalanza1
+        global user_input_arduino
+
+        try:
+
+            val = float(val[1:9])
+
+            if (pesoBalanza1 == False and float(val)> 0.5):
+                user_input_arduino = "c"
+            else:
+                user_input_arduino = "g"
+            
+            if (pesoBalanza1 == True and float(val) < 0.5):
+                pesoBalanza1 = False
+                user_input_arduino = "e"
+           
+        except ValueError:
+           pass
 
     def evt_actualizar_estado(self, val):
         if (balanzaSeleccionada == 1) :
@@ -516,21 +524,12 @@ class Inicio(QMainWindow):
         if (balanzaSeleccionada == 2) :
             try:
                 signo = val[0:1]
-                val = float(val[1:10])
+                val = float(val[1:9])
                 
                 if (signo == "-") and val != 0:
                     self.ui.lblPesoIndicador.setText("-"+str(format(val, ".2f")))
                 else:
                     self.ui.lblPesoIndicador.setText(format(val, ".2f"))
-                    
-                if pesoBalanza2 == False and float(self.ui.lblPesoIndicador.text()) > 0.5:
-                    user_input_arduino = "d"
-                elif pesoBalanza2 == False and float(self.ui.lblPesoIndicador.text()) < 0.5:
-                    user_input_arduino = "f"
-                    
-                if pesoBalanza2 == True and float(self.ui.lblPesoIndicador.text()) < 0.5:
-                    pesoBalanza2 == False
-                    
             except ValueError:
                 self.ui.lblPesoIndicador.setText("0.00")
 
@@ -543,6 +542,26 @@ class Inicio(QMainWindow):
             elif (val == "1"):
                 self.ui.lblEstadoBalanzas.setText("EN LINEA")
                 self.ui.lblEstadoBalanzas.setStyleSheet("background-color: rgb(32, 176, 20);color: rgb(255, 255, 255);")
+
+    def evt_actualizar_baliza2(self, val):    
+        global pesoBalanza2
+        global user_input_arduino
+
+        try:
+
+            val = float(val[1:9])
+
+            if (pesoBalanza2 == False and float(val)> 0.5):
+                user_input_arduino = "d"
+            else:
+                user_input_arduino = "h"
+            
+            if (pesoBalanza2 == True and float(val) < 0.5):
+                pesoBalanza2 = False
+                user_input_arduino = "f"
+           
+        except ValueError:
+           pass
         
     def mostrar_hora(self,val):
         self.ui.lblHora.setText(val)
@@ -907,11 +926,11 @@ class Inicio(QMainWindow):
         else:
             print("Con conexión a internet")
             try:
-                #self.conexion.actualizar_datos_servidor_a_local_clientes()
+                self.conexion.actualizar_datos_servidor_a_local_clientes()
                 time.sleep(1)
-                #self.conexion.actualizar_datos_servidor_a_local_precios()
+                self.conexion.actualizar_datos_servidor_a_local_precios()
                 time.sleep(1)
-                #self.conexion.actualizar_datos_servidor_a_local_password()
+                self.conexion.actualizar_datos_servidor_a_local_password()
             except Exception as e:
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
@@ -927,9 +946,9 @@ class Inicio(QMainWindow):
         else:
             print("Con conexión a internet")
             try:
-                #self.conexion.actualizar_datos_servidor_procesos()
+                self.conexion.actualizar_datos_servidor_procesos()
                 time.sleep(2)
-                #self.conexion.actualizar_datos_servidor_pesadas()
+                self.conexion.actualizar_datos_servidor_pesadas()
             except Exception as e:
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
@@ -1372,11 +1391,15 @@ class Inicio(QMainWindow):
         self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioCliente,balanzaSeleccionada,numJabas,valorDeConversion,estadoPeso,estadoWebPeso,observacionPeso,idGrupoCli)
         
         if balanzaSeleccionada == 1:
-            user_input_arduino = "a"
+            user_input_arduino = "agi"
+            time.sleep(1)
+            user_input_arduino = "k"
             pesoBalanza1 = True
             
         elif balanzaSeleccionada == 2:
-            user_input_arduino = "b"
+            user_input_arduino = "bhj"
+            time.sleep(1)
+            user_input_arduino = "l"
             pesoBalanza2 = True  
                   
         self.fn_listarVenta()
@@ -1393,12 +1416,16 @@ class Inicio(QMainWindow):
         self.conexion.db_registrarPesadas(numProceso,idEspecieDesc,pesoNeto,horaPeso,codCliente,fechaPeso,cantidadRegistro,precioClienteDesc,balanzaSeleccionada,numJabas,valorDeConversionDesc,estadoPeso,estadoWebPeso,observacionPeso,idGrupoCli)
         
         if balanzaSeleccionada == 1:
-            user_input_arduino = "a"
+            user_input_arduino = "agi"
+            time.sleep(1)
+            user_input_arduino = "k"
             pesoBalanza1 = True
             
         elif balanzaSeleccionada == 2:
-            user_input_arduino = "b"
-            pesoBalanza2 = True  
+            user_input_arduino = "bhj"
+            time.sleep(1)
+            user_input_arduino = "l"
+            pesoBalanza2 = True 
         
         self.fn_listarVenta()
         
@@ -1415,12 +1442,16 @@ class Inicio(QMainWindow):
         self.conexion.db_registrarPesadas(numProceso,idEspecie,pesoNeto,horaPeso,codCliente,fechaPeso,numJabas,precioCliente,balanzaSeleccionada,cantidadRegistro,valorDeConversion,estadoPeso,estadoWebPeso,observacionPeso,idGrupoCli)
         
         if balanzaSeleccionada == 1:
-            user_input_arduino = "a"
+            user_input_arduino = "agi"
+            time.sleep(1)
+            user_input_arduino = "k"
             pesoBalanza1 = True
             
         elif balanzaSeleccionada == 2:
-            user_input_arduino = "b"
-            pesoBalanza2 = True  
+            user_input_arduino = "bhj"
+            time.sleep(1)
+            user_input_arduino = "l"
+            pesoBalanza2 = True 
         
         numJabas = 0
         
