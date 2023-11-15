@@ -427,10 +427,6 @@ class Inicio(QMainWindow):
             self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente | Balanza 3.",2000)
             
             if(codClienteEs == codCliente):
-                self.fn_seleccionaBalanza()
-                self.fn_seleccionarEspecie(idEspecie)
-                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
-                self.fn_verificarProceso()
                 self.fn_listarVenta()
         else:
             self.fn_alerta("¡ADVERTENCIA!",error,"El codigo de cliente ingresado no existe.",1500)
@@ -483,10 +479,6 @@ class Inicio(QMainWindow):
             self.fn_alerta("¡REGISTRO EXITOSO!",correcto,"El registro se realizo correctamente | Balanza 3.",2000)
             
             if(codClienteEs == codCliente):
-                self.fn_seleccionaBalanza()
-                self.fn_seleccionarEspecie(idEspecie)
-                self.fn_seleccionarEspecieDescuento(idEspecieDesc)
-                self.fn_verificarProceso()
                 self.fn_listarVenta()
         else:
             self.fn_alerta("¡ADVERTENCIA!",error,"El codigo de cliente ingresado no existe.",1500)
@@ -932,9 +924,6 @@ class Inicio(QMainWindow):
         # Llama a fn_traerDatosServidor en un hilo para evitar bloquear la interfaz de usuario
         thread = threading.Thread(target=self.fn_traerDatosServidor)
         thread.start()
-        
-        thread2 = threading.Thread(target=self.fn_subirDatosServidor)
-        thread2.start()
     
     def fn_traerDatosServidor(self):
         s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -954,25 +943,6 @@ class Inicio(QMainWindow):
                 print(f"Error al interactuar con la base de datos: {e}")
             else:
                 s2.close()
-            
-    def fn_subirDatosServidor(self):
-        s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s2.settimeout(5)
-        try:
-            s2.connect(("www.google.com", 80))
-        except (socket.gaierror, socket.timeout):
-            print("Sin conexión a internet")
-        else:
-            print("Con conexión a internet")
-            try:
-                #self.conexion.actualizar_datos_servidor_procesos()
-                #self.conexion.actualizar_datos_servidor_pesadas()
-                print("Exito al interactuar con la base de datos")
-            except Exception as e:
-                print(f"Error al interactuar con la base de datos: {e}")
-            else:
-                s2.close()
-            
             # Oculta el formulario de alerta cuando termina de actualizar los datos
             self.ui.frmAlerta.setHidden(True)
     
