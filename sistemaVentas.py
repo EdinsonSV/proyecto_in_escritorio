@@ -1308,10 +1308,8 @@ class Inicio(QMainWindow):
             
         if balanzaSeleccionada == 1:
             especieCli1 = idEspecie
-            especieDesCli1 = idEspecieDesc
         elif balanzaSeleccionada == 2:
             especieCli2 = idEspecie
-            especieDesCli2 = idEspecieDesc
             
     def fn_seleccionarEspecieDescuento(self,especieDesc):
         global idEspecieDesc
