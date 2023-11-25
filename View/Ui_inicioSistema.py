@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\proyecto_in_escritorio\View\inicioSistema.ui'
+# Form implementation generated from reading ui file 'c:\Users\edins\Documents\RECURSOS PROYECTO DE INNOVACIÓN\proyecto_in_escritorio\View\inicioSistema.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -101,6 +101,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.lblTituloPrincipal.setText(_translate("MainWindow", "SISTEMA INTEGRADO DE COMPRA Y VENTA"))
+        self.lblTituloPrincipal.setText(_translate("MainWindow", "SISTEMA INTEGRADO DE VENTA"))
         self.lblVenta.setText(_translate("MainWindow", "VENTA"))
         self.lblSubTituloPrincipal.setText(_translate("MainWindow", "PRESIONE ENTER PARA INICIAR :"))
