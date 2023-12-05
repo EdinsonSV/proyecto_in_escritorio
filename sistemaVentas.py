@@ -1572,11 +1572,11 @@ class Inicio(QMainWindow):
                             item.setTextAlignment(Qt.AlignCenter)
                             tablaDePesos.setItem(row_number, column_number, item)
                             
-                        if (row_data[7] == 0):
-                            self.fn_pintarCeldasRegistrosEliminados(row_number)
-                            
                         if (row_data[5] == 0) and (row_data[8] > 0):
                             self.fn_pintarCeldasDeTara(row_number)
+
+                        if (row_data[7] == 0):
+                            self.fn_pintarCeldasRegistrosEliminados(row_number)
         
         if totalDeJabas > 0:
             self.ui.txtCantidadDeJabas.setHidden(False)
