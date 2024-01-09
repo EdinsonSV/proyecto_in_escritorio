@@ -589,10 +589,10 @@ border-bottom:0;
        <string>0 Uds.</string>
       </property>
      </widget>
-     <widget class="QLabel" name="txtCantJabasTotales">
+     <widget class="QLabel" name="txtCantJabasTotalesYugo">
       <property name="geometry">
        <rect>
-        <x>1420</x>
+        <x>1010</x>
         <y>0</y>
         <width>140</width>
         <height>50</height>
@@ -616,7 +616,7 @@ border-bottom:0;
      <widget class="QLabel" name="txtCantidadDeJabas">
       <property name="geometry">
        <rect>
-        <x>1270</x>
+        <x>860</x>
         <y>0</y>
         <width>140</width>
         <height>50</height>
@@ -635,6 +635,78 @@ border-bottom:0;
       </property>
       <property name="text">
        <string>T. JABAS:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="txtCantJabasTotalesPerla">
+      <property name="geometry">
+       <rect>
+        <x>1160</x>
+        <y>0</y>
+        <width>140</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Poppins</family>
+        <pointsize>23</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #FFD100;</string>
+      </property>
+      <property name="text">
+       <string>100 Uds.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="txtCantJabasTotalesChimu">
+      <property name="geometry">
+       <rect>
+        <x>1310</x>
+        <y>0</y>
+        <width>140</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Poppins</family>
+        <pointsize>23</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #FFD100;</string>
+      </property>
+      <property name="text">
+       <string>100 Uds.</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="txtCantJabasTotalesXX">
+      <property name="geometry">
+       <rect>
+        <x>1460</x>
+        <y>0</y>
+        <width>140</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Poppins</family>
+        <pointsize>23</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #FFD100;</string>
+      </property>
+      <property name="text">
+       <string>100 Uds.</string>
       </property>
      </widget>
     </widget>
