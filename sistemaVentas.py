@@ -370,7 +370,10 @@ class Inicio(QMainWindow):
         self.ui.frmAplicarDescuento.setHidden(True)
         self.ui.frmIngresarPassword.setHidden(True)
         self.ui.frmAlertaEliminar.setHidden(True)
-        self.ui.txtCantJabasTotales.setHidden(True)
+        self.ui.txtCantJabasTotalesYugo.setHidden(True)
+        self.ui.txtCantJabasTotalesPerla.setHidden(True)
+        self.ui.txtCantJabasTotalesChimu.setHidden(True)
+        self.ui.txtCantJabasTotalesXX.setHidden(True)
         self.ui.txtCantidadDeJabas.setHidden(True)
         
         self.ui.txtCantidadParaIngresar.textChanged.connect(self.fn_validarEntradaNumerica)
@@ -1246,7 +1249,10 @@ class Inicio(QMainWindow):
         self.ui.lblKgPolloChimu.setText("{:.2f} Kg".format(0))
         self.ui.lblKgPolloXX.setText("{:.2f} Kg".format(0))
         
-        self.ui.txtCantJabasTotales.setHidden(True)
+        self.ui.txtCantJabasTotalesYugo.setHidden(True)
+        self.ui.txtCantJabasTotalesPerla.setHidden(True)
+        self.ui.txtCantJabasTotalesChimu.setHidden(True)
+        self.ui.txtCantJabasTotalesXX.setHidden(True)
         self.ui.txtCantidadDeJabas.setHidden(True)
         
         tablaDePesos = self.ui.tblDetallePesadas
@@ -1502,12 +1508,21 @@ class Inicio(QMainWindow):
         totalCantidadDescSegundaEspecie = 0
         totalCantidadDescTerceraEspecie = 0
         totalCantidadDescCuartaEspecie = 0
+        
         totalDeJabas = 0
+        totalJabasPrimerEspecie = 0
+        totalJabasSegundaEspecie = 0
+        totalJabasTercerEspecie = 0
+        totalJabasCuartaEspecie = 0
+        
         
         frmInicioProceso = False
         listoParaAccionar = False
         
-        self.ui.txtCantJabasTotales.setHidden(True)
+        self.ui.txtCantJabasTotalesYugo.setHidden(True)
+        self.ui.txtCantJabasTotalesPerla.setHidden(True)
+        self.ui.txtCantJabasTotalesChimu.setHidden(True)
+        self.ui.txtCantJabasTotalesXX.setHidden(True)
         self.ui.txtCantidadDeJabas.setHidden(True)
         
         if codCliente != 0:
@@ -1554,9 +1569,18 @@ class Inicio(QMainWindow):
                                 totalCantidadTotalEspecies += row_data[5]
                                 
                             if column_number == 5 and row_data[5] == 0:
-                                if row_data[8] > 0:
+                                if row_data[8] > 0 and row_data[7] == 1:
                                     data = "{} T".format(row_data[8])
                                     totalDeJabas += row_data[8]
+                                    
+                                    if row_data[3] == nombrePrimerEspecie:
+                                        totalJabasPrimerEspecie += row_data[8]
+                                    elif row_data[3] == nombreSegundaEspecie:
+                                        totalJabasSegundaEspecie += row_data[8]
+                                    elif row_data[3] == nombreTerceraEspecie:
+                                        totalJabasTercerEspecie += row_data[8]
+                                    elif row_data[3] == nombreCuartaEspecie:
+                                        totalJabasCuartaEspecie += row_data[8]
                                 
                             if row_data[5] < 0 :
                                 if data == nombrePrimerEspecie:
@@ -1580,8 +1604,14 @@ class Inicio(QMainWindow):
         
         if totalDeJabas > 0:
             self.ui.txtCantidadDeJabas.setHidden(False)
-            self.ui.txtCantJabasTotales.setHidden(False)
-            self.ui.txtCantJabasTotales.setText("{} {}".format(totalDeJabas, "Ud." if totalDeJabas == 1 else "Uds."))
+            self.ui.txtCantJabasTotalesYugo.setHidden(False)
+            self.ui.txtCantJabasTotalesPerla.setHidden(False)
+            self.ui.txtCantJabasTotalesChimu.setHidden(False)
+            self.ui.txtCantJabasTotalesXX.setHidden(False)
+            self.ui.txtCantJabasTotalesYugo.setText("{} {}".format(totalJabasPrimerEspecie, "Ud." if totalJabasPrimerEspecie == 1 else "Uds."))
+            self.ui.txtCantJabasTotalesPerla.setText("{} {}".format(totalJabasSegundaEspecie, "Ud." if totalJabasSegundaEspecie == 1 else "Uds."))
+            self.ui.txtCantJabasTotalesChimu.setText("{} {}".format(totalJabasTercerEspecie, "Ud." if totalJabasTercerEspecie == 1 else "Uds."))
+            self.ui.txtCantJabasTotalesXX.setText("{} {}".format(totalJabasCuartaEspecie, "Ud." if totalJabasCuartaEspecie == 1 else "Uds."))
                             
         self.ui.lblKgPolloYugo.setText("{:.2f} Kg".format(totalPesoPrimerEspecie))
         self.ui.lblKgPolloPerla.setText("{:.2f} Kg".format(totalPesoSegundaEspecie))
