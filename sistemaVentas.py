@@ -118,6 +118,10 @@ listoParaAccionar = False
 btnActualizar = True
 contadorActualizar = 30
 
+# Variables para capturar y comparar peso
+capturaPesoB1 = 0
+capturaPesoB2 = 0
+
 # Variables de rutas de imagenes para alerta
 correcto = "imagenes/correcto.png"
 error = "imagenes/error.png"
@@ -505,6 +509,7 @@ class Inicio(QMainWindow):
     def evt_actualizar_baliza(self, val):    
         global pesoBalanza1
         global user_input_arduino
+        global capturaPesoB1
 
         try:
 
@@ -518,6 +523,12 @@ class Inicio(QMainWindow):
             if (pesoBalanza1 == True and float(val) < 0.5):
                 pesoBalanza1 = False
                 user_input_arduino = "e"
+                capturaPesoB1 = 0
+                
+            if (capturaPesoB1 < float(self.ui.lblPesoIndicador.text())):
+                user_input_arduino = "i"
+            else:
+                user_input_arduino = "k"
            
         except ValueError:
            pass
@@ -561,6 +572,7 @@ class Inicio(QMainWindow):
     def evt_actualizar_baliza2(self, val):    
         global pesoBalanza2
         global user_input_arduino
+        global capturaPesoB2
 
         try:
 
@@ -574,6 +586,12 @@ class Inicio(QMainWindow):
             if (pesoBalanza2 == True and float(val) < 0.5):
                 pesoBalanza2 = False
                 user_input_arduino = "f"
+                capturaPesoB2 = 0
+                
+            if (capturaPesoB2 < float(self.ui.lblPesoIndicador.text())):
+                user_input_arduino = "j"
+            else:
+                user_input_arduino = "l"
            
         except ValueError:
            pass
@@ -1380,6 +1398,8 @@ class Inicio(QMainWindow):
         global pesoBalanza2
         global horaPeso
         global fechaPeso
+        global capturaPesoB1
+        global capturaPesoB2
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1393,12 +1413,14 @@ class Inicio(QMainWindow):
             time.sleep(1)
             user_input_arduino = "k"
             pesoBalanza1 = True
+            capturaPesoB1 = float(self.ui.lblPesoIndicador.text())
             
         elif balanzaSeleccionada == 2:
             user_input_arduino = "bhj"
             time.sleep(1)
             user_input_arduino = "l"
             pesoBalanza2 = True  
+            capturaPesoB2 = float(self.ui.lblPesoIndicador.text())
                   
         self.fn_listarVenta()
         
@@ -1410,6 +1432,8 @@ class Inicio(QMainWindow):
         global pesoBalanza2
         global horaPeso
         global fechaPeso
+        global capturaPesoB1
+        global capturaPesoB2
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1423,12 +1447,14 @@ class Inicio(QMainWindow):
             time.sleep(1)
             user_input_arduino = "k"
             pesoBalanza1 = True
+            capturaPesoB1 = float(self.ui.lblPesoIndicador.text())
             
         elif balanzaSeleccionada == 2:
             user_input_arduino = "bhj"
             time.sleep(1)
             user_input_arduino = "l"
             pesoBalanza2 = True 
+            capturaPesoB2 = float(self.ui.lblPesoIndicador.text())
         
         self.fn_listarVenta()
         
@@ -1441,6 +1467,8 @@ class Inicio(QMainWindow):
         global pesoBalanza2
         global horaPeso
         global fechaPeso
+        global capturaPesoB1
+        global capturaPesoB2
         
         horaPeso = datetime.now().strftime('%H:%M:%S')
         fechaPeso = datetime.now().strftime('%Y-%m-%d')
@@ -1454,12 +1482,14 @@ class Inicio(QMainWindow):
             time.sleep(1)
             user_input_arduino = "k"
             pesoBalanza1 = True
+            capturaPesoB1 = float(self.ui.lblPesoIndicador.text())
             
         elif balanzaSeleccionada == 2:
             user_input_arduino = "bhj"
             time.sleep(1)
             user_input_arduino = "l"
             pesoBalanza2 = True 
+            capturaPesoB2 = float(self.ui.lblPesoIndicador.text())
         
         numJabas = 0
         
