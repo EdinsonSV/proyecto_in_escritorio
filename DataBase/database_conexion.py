@@ -10,7 +10,7 @@ class Conectar():
         # Conexion para MySql
         self.conexionsql = mysql.connector.connect(host='localhost',
                                         user='root',
-                                        password='',
+                                        password='Balinsa2023.',
                                         database='bd_proyectoin',
                                         port='3306')
         

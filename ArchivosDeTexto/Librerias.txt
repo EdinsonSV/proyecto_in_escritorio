@@ -1,1 +1,18 @@
+# Paso 1 instalar VirtualEnd:
+pip install virtualenv
+
+#Paso 2 iniciar VirtualEnd
+virtualenv env
+
+#Paso 3 activar VirtualEnd, ingresar a env\Scripts y ejecutar el comando "activate" y una vez iniciado regresar
+a la carpeta raiz
+C:\Users\Edinson Santos\Documents\sistemaavicola\env\Scripts>activate
+
+#Paso 4 instalar las librerias
 pip install PyQt5Designer PyQt5 pyserial psutil mysql-connector-python requests openpyxl win32printing pywin32
+
+#Paso 6 instalar el compilador
+pip install auto-py-to-exe
+
+#Paso 7 ejecutar el compilador
+auto-py-to-exe
