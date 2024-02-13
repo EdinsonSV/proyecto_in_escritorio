@@ -118,6 +118,8 @@ class InicioSistema(QMainWindow):
         COM2 = str(puertoIndicadores[0][1])
         
     def fn_cerrarPrograma(self):
+        if self.moduloVentas and self.moduloVentas.isVisible():
+            self.moduloVentas.close()
         self.close()
     
     def fn_minimizarPrograma(self):

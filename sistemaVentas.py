@@ -1526,7 +1526,7 @@ class Inicio(QMainWindow):
         self.ui.txtCantidadDeJabas.setHidden(True)
         
         if codCliente != 0:
-            pesosListarTabla = self.conexion.db_listarPesosTabla(numProceso,codCliente)
+            pesosListarTabla = self.conexion.db_listarPesosTabla(codCliente) 
             
             frmInicioProceso = True
             

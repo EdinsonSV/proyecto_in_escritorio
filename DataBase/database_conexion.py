@@ -111,7 +111,7 @@ class Conectar():
         self.conexionsql.commit()
         cursor.close()
         
-    def db_listarPesosTabla(self,numProceso,codigoCli):
+    def db_listarPesosTabla(self,codigoCli):
         cursor = self.conexionsql.cursor()
         sql = """SELECT
                     CAST((@rownum:=@rownum-1) as INT) as num,
@@ -125,10 +125,10 @@ class Conectar():
                     INNER JOIN tb_procesos ON p.idProceso = tb_procesos.idProceso
                     INNER JOIN tb_especies_venta ON p.idEspecie = tb_especies_venta.idEspecie
                 WHERE
-                    p.fechaRegistroPes = DATE(NOW()) AND p.idProceso = %s AND p.codigoCli = %s
+                    p.fechaRegistroPes = DATE(NOW()) AND p.codigoCli = %s
                 ORDER BY
                     p.idPesada desc"""
-        cursor.execute(sql,(codigoCli, numProceso, codigoCli))
+        cursor.execute(sql,(codigoCli, codigoCli))
         result = cursor.fetchall()
         cursor.close()
         return result
